@@ -1,0 +1,571 @@
+:root {
+    /* Color Palette */
+    --bg-dark: #0a0a0f;
+    --bg-panel: rgba(20, 20, 30, 0.6);
+    --text-main: #f0f0f5;
+    --text-muted: #8a8a9d;
+    --accent-color: #fca311;
+    
+    /* Elements Colors */
+    --elem-fire: #ff4757;
+    --elem-wind: #1dd1a1;
+    --elem-mountain: #feca57;
+    --elem-forest: #10ac84;
+    --elem-void: #a4b0be;
+
+    /* Card sizing */
+    --card-width: 140px;
+    --card-height: 200px;
+    
+    /* Glassmorphism */
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    min-height: 100vh;
+    overflow-x: hidden;
+    background-image: radial-gradient(circle at center, #1a1a2e 0%, #0a0a0f 100%);
+}
+
+.app-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Header */
+.header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 2rem;
+    background: var(--bg-panel);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    margin-bottom: 2rem;
+    box-shadow: var(--glass-shadow);
+}
+
+.logo {
+    font-family: 'Outfit', sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    background: linear-gradient(45deg, #fff, var(--accent-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.logo span {
+    font-weight: 400;
+}
+
+.controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+select {
+    background: rgba(0, 0, 0, 0.3);
+    color: white;
+    border: 1px solid var(--glass-border);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    outline: none;
+    cursor: pointer;
+}
+
+.btn {
+    background: var(--accent-color);
+    color: #000;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(252, 163, 17, 0.4);
+}
+
+.team-stats .stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.stat-label {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.stat-value {
+    font-family: 'Outfit', sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--accent-color);
+}
+
+/* Pitch */
+.pitch-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    perspective: 1000px;
+}
+
+.pitch {
+    position: relative;
+    width: 800px;
+    height: 1000px; /* Taller for vertical football pitch */
+    background: linear-gradient(to bottom, #1B4F29, #13391d);
+    border: 4px solid rgba(255,255,255,0.3);
+    border-radius: 12px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    /* Rimosso il 3D tilt perché causa problemi di click su Chrome/Firefox per gli elementi inferiori (Difesa/Portiere) */
+}
+
+.pitch-lines {
+    position: absolute;
+    inset: 0;
+    background-image: 
+        /* Center line */
+        linear-gradient(to bottom, transparent 49.5%, rgba(255,255,255,0.4) 49.5%, rgba(255,255,255,0.4) 50.5%, transparent 50.5%),
+        /* Center circle */
+        radial-gradient(circle at center, transparent 15%, rgba(255,255,255,0.4) 15%, rgba(255,255,255,0.4) 16%, transparent 16%);
+    pointer-events: none;
+}
+
+/* Formations layout container */
+.slots-container {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    padding: 2rem 0;
+}
+
+.formation-row {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    width: 100%;
+}
+
+/* Pitch Slot */
+.pitch-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    margin-bottom: 4rem;
+}
+
+.bench-container {
+    width: 800px;
+    background: var(--bg-panel);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    backdrop-filter: blur(12px);
+    box-shadow: var(--glass-shadow);
+}
+
+.bench-title {
+    text-align: center;
+    margin-bottom: 1rem;
+    font-family: 'Outfit', sans-serif;
+    color: var(--accent-color);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.bench-slots {
+    display: flex;
+    justify-content: space-evenly;
+    gap: 1rem;
+}
+
+.pitch-slot {
+    width: var(--card-width);
+    height: var(--card-height);
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.pitch-slot:hover {
+    transform: scale(1.05);
+}
+
+.slot-placeholder {
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    border: 2px dashed rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(4px);
+    transition: all 0.3s ease;
+}
+
+.pitch-slot:hover .slot-placeholder {
+    border-color: var(--accent-color);
+    background: rgba(252, 163, 17, 0.1);
+}
+
+.slot-position {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.slot-card-container {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+}
+
+/* Player Card */
+.player-card {
+    width: var(--card-width);
+    height: var(--card-height);
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(10px);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transform-origin: center bottom;
+    display: flex;
+    flex-direction: column;
+}
+
+.player-card:hover {
+    transform: translateY(-10px) scale(1.05);
+    z-index: 10;
+}
+
+.card-background {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(0,0,0,0.4));
+    z-index: 0;
+}
+
+.card-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 0.5rem;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.player-rating {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.player-position {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    opacity: 0.8;
+}
+
+.player-image-container {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    margin-top: -10px;
+}
+
+.player-image {
+    max-height: 100px;
+    max-width: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 4px 6px rgba(0,0,0,0.5));
+}
+
+.player-info {
+    text-align: center;
+    margin-top: auto;
+    padding-top: 5px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+.player-name {
+    font-size: 0.9rem;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 2px;
+}
+
+.player-details {
+    display: flex;
+    flex-direction: column;
+    font-size: 0.6rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.player-team, .player-game {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Sidebar */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: -350px;
+    width: 350px;
+    height: 100vh;
+    background: var(--bg-panel);
+    backdrop-filter: blur(15px);
+    border-right: 1px solid var(--glass-border);
+    z-index: 900;
+    transition: left 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem;
+    box-shadow: 10px 0 30px rgba(0,0,0,0.5);
+}
+
+.sidebar.open {
+    left: 0;
+}
+
+.sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.sidebar-header h2 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.2rem;
+    color: var(--accent-color);
+}
+
+.sidebar-header .btn-close {
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    color: white;
+    cursor: pointer;
+}
+
+.sidebar-search input {
+    width: 100%;
+    padding: 0.8rem;
+    border-radius: 8px;
+    background: rgba(0,0,0,0.3);
+    border: 1px solid var(--glass-border);
+    color: white;
+    margin-bottom: 1rem;
+    outline: none;
+    font-family: 'Inter', sans-serif;
+}
+
+.teams-list {
+    list-style: none;
+    overflow-y: auto;
+    flex-grow: 1;
+    padding-right: 10px;
+}
+
+/* Scrollbar per la lista */
+.teams-list::-webkit-scrollbar { width: 6px; }
+.teams-list::-webkit-scrollbar-track { background: transparent; }
+.teams-list::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 3px; }
+
+.teams-list li {
+    padding: 0.8rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.team-eng {
+    font-weight: 700;
+    color: var(--text-main);
+}
+
+.team-ita {
+    font-size: 0.85rem;
+    color: var(--accent-color);
+}
+
+.player-element {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 2px;
+    font-weight: 600;
+}
+
+/* Element specific styles */
+.card-fire {
+    border-color: var(--elem-fire);
+    box-shadow: 0 0 15px rgba(255, 71, 87, 0.3);
+}
+.card-fire .card-background { background: linear-gradient(135deg, rgba(255, 71, 87, 0.2), rgba(0,0,0,0.6)); }
+.card-fire .player-element { color: var(--elem-fire); }
+
+.card-wind {
+    border-color: var(--elem-wind);
+    box-shadow: 0 0 15px rgba(29, 209, 161, 0.3);
+}
+.card-wind .card-background { background: linear-gradient(135deg, rgba(29, 209, 161, 0.2), rgba(0,0,0,0.6)); }
+.card-wind .player-element { color: var(--elem-wind); }
+
+.card-mountain {
+    border-color: var(--elem-mountain);
+    box-shadow: 0 0 15px rgba(254, 202, 87, 0.3);
+}
+.card-mountain .card-background { background: linear-gradient(135deg, rgba(254, 202, 87, 0.2), rgba(0,0,0,0.6)); }
+.card-mountain .player-element { color: var(--elem-mountain); }
+
+.card-forest {
+    border-color: var(--elem-forest);
+    box-shadow: 0 0 15px rgba(16, 172, 132, 0.3);
+}
+.card-forest .card-background { background: linear-gradient(135deg, rgba(16, 172, 132, 0.2), rgba(0,0,0,0.6)); }
+.card-forest .player-element { color: var(--elem-forest); }
+
+/* Modal */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(8px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.modal-content {
+    background: var(--bg-panel);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 3rem;
+    text-align: center;
+    transform: translateY(20px);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    max-width: 90vw;
+}
+
+.modal-overlay.active .modal-content {
+    transform: translateY(0);
+}
+
+.modal-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    color: white;
+}
+
+.draft-choices {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+}
+
+/* Modifiers for choices */
+.draft-choices .player-card {
+    cursor: pointer;
+    --card-width: 160px;
+    --card-height: 230px;
+}
+
+.draft-choices .player-image {
+    max-height: 120px;
+}
+
+.btn-close {
+    background: rgba(255,255,255,0.1);
+    color: white;
+}
+
+.btn-close:hover {
+    background: rgba(255,255,255,0.2);
+    box-shadow: none;
+}
+
+/* Animations */
+@keyframes cardSpawn {
+    from {
+        opacity: 0;
+        transform: scale(0.8) translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.animate-spawn {
+    animation: cardSpawn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
